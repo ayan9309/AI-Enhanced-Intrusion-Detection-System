@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Intrusion Detection System</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            font-family:'Poppins',sans-serif;
+            min-height:100vh;
+            overflow-x:hidden;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background:linear-gradient(-45deg,#020617,#0f172a,#111827,#134e4a);
+            background-size:400% 400%;
+            animation:gradientBG 12s ease infinite;
+            position:relative;
+            padding:30px;
+        }
+
+        @keyframes gradientBG{
+            0%{
+                background-position:0% 50%;
+            }
+            50%{
+                background-position:100% 50%;
+            }
+            100%{
+                background-position:0% 50%;
+            }
+        }
+
+        /* Floating particles */
+
+        .particles{
+            position:absolute;
+            width:100%;
+            height:100%;
+            overflow:hidden;
+            top:0;
+            left:0;
+            z-index:0;
+        }
+
+        .particles span{
+            position:absolute;
+            display:block;
+            width:15px;
+            height:15px;
+            background:rgba(255,255,255,0.08);
+            border-radius:50%;
+            animation:animate 20s linear infinite;
+            bottom:-150px;
+        }
+
+        .particles span:nth-child(1){
+            left:10%;
+            width:25px;
+            height:25px;
+            animation-duration:15s;
+        }
+
+        .particles span:nth-child(2){
+            left:20%;
+            animation-duration:10s;
+        }
+
+        .particles span:nth-child(3){
+            left:35%;
+            width:20px;
+            height:20px;
+            animation-duration:17s;
+        }
+
+        .particles span:nth-child(4){
+            left:50%;
+            animation-duration:12s;
+        }
+
+        .particles span:nth-child(5){
+            left:65%;
+            width:28px;
+            height:28px;
+            animation-duration:20s;
+        }
+
+        .particles span:nth-child(6){
+            left:80%;
+            animation-duration:14s;
+        }
+
+        .particles span:nth-child(7){
+            left:90%;
+            width:18px;
+            height:18px;
+            animation-duration:16s;
+        }
+
+        @keyframes animate{
+            0%{
+                transform:translateY(0) rotate(0deg);
+                opacity:0;
+            }
+
+            10%{
+                opacity:1;
+            }
+
+            100%{
+                transform:translateY(-1200px) rotate(360deg);
+                opacity:0;
+            }
+        }
+
+        /* Main container */
+
+        .container{
+            position:relative;
+            z-index:1;
+            width:450px;
+            padding:35px;
+            border-radius:25px;
+            backdrop-filter:blur(18px);
+            background:rgba(255,255,255,0.08);
+            border:1px solid rgba(255,255,255,0.15);
+
+            box-shadow:
+                0 10px 35px rgba(0,0,0,0.5),
+                0 0 25px rgba(0,255,255,0.15);
+
+            animation:fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn{
+            from{
+                opacity:0;
+                transform:translateY(30px);
+            }
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
+        }
+
+        .logo{
+            text-align:center;
+            font-size:55px;
+            margin-bottom:10px;
+        }
+
+        h1{
+            text-align:center;
+            font-size:30px;
+            margin-bottom:10px;
+            font-weight:700;
+
+            background:linear-gradient(to right,#00f5ff,#00ff95);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+        }
+
+        .subtitle{
+            text-align:center;
+            color:#cbd5e1;
+            font-size:14px;
+            margin-bottom:30px;
+        }
+
+        .input-group{
+            margin-bottom:20px;
+        }
+
+        label{
+            display:block;
+            margin-bottom:8px;
+            color:#e2e8f0;
+            font-size:14px;
+            font-weight:500;
+        }
+
+        input{
+            width:100%;
+            padding:15px;
+            border:none;
+            outline:none;
+            border-radius:14px;
+
+            background:rgba(255,255,255,0.08);
+            color:white;
+            font-size:15px;
+
+            border:1px solid transparent;
+
+            transition:0.3s;
+        }
+
+        input::placeholder{
+            color:#94a3b8;
+        }
+
+        input:focus{
+            border:1px solid #00f5ff;
+            box-shadow:0 0 15px rgba(0,245,255,0.4);
+            transform:scale(1.02);
+        }
+
+        .btn{
+            width:100%;
+            padding:15px;
+            margin-top:10px;
+
+            border:none;
+            border-radius:14px;
+
+            background:linear-gradient(to right,#00f5ff,#00ff95);
+
+            color:#0f172a;
+            font-size:16px;
+            font-weight:700;
+
+            cursor:pointer;
+
+            transition:0.4s;
+        }
+
+        .btn:hover{
+            transform:translateY(-3px);
+            box-shadow:0 10px 25px rgba(0,255,200,0.35);
+        }
+
+        .btn:active{
+            transform:scale(0.98);
+        }
+
+        /* Loading animation */
+
+        .loader-wrapper{
+            position:fixed;
+            top:0;
+            left:0;
+
+            width:100%;
+            height:100%;
+
+            background:rgba(0,0,0,0.92);
+
+            display:none;
+            justify-content:center;
+            align-items:center;
+            flex-direction:column;
+
+            z-index:9999;
+        }
+
+        .loader{
+            width:90px;
+            height:90px;
+
+            border:8px solid rgba(255,255,255,0.08);
+            border-top:8px solid #00f5ff;
+
+            border-radius:50%;
+
+            animation:spin 1s linear infinite;
+        }
+
+        @keyframes spin{
+            100%{
+                transform:rotate(360deg);
+            }
+        }
+
+        .loading-text{
+            margin-top:25px;
+            color:#00f5ff;
+            font-size:20px;
+            letter-spacing:1px;
+        }
+
+        /* Popup Modal */
+
+        .popup-overlay{
+
+            position:fixed;
+            top:0;
+            left:0;
+
+            width:100%;
+            height:100%;
+
+            background:rgba(0,0,0,0.75);
+
+            display:flex;
+            justify-content:center;
+            align-items:center;
+
+            z-index:10000;
+
+            animation:fadePopup 0.4s ease;
+        }
+
+        .popup-box{
+
+            width:350px;
+            padding:30px;
+
+            border-radius:20px;
+
+            background:#111827;
+
+            text-align:center;
+
+            box-shadow:0 0 25px rgba(0,255,200,0.4);
+
+            animation:popupScale 0.4s ease;
+        }
+
+        .popup-box h2{
+
+            color:#00ffb3;
+            margin-bottom:15px;
+        }
+
+        .popup-box p{
+
+            color:white;
+            font-size:22px;
+            font-weight:600;
+            margin-bottom:20px;
+        }
+
+        .popup-box button{
+
+            padding:12px 25px;
+
+            border:none;
+            border-radius:12px;
+
+            background:linear-gradient(to right,#00f5ff,#00ff95);
+
+            color:#0f172a;
+
+            font-weight:700;
+            cursor:pointer;
+
+            transition:0.3s;
+        }
+
+        .popup-box button:hover{
+
+            transform:scale(1.05);
+        }
+
+        @keyframes popupScale{
+
+            from{
+                transform:scale(0.6);
+                opacity:0;
+            }
+
+            to{
+                transform:scale(1);
+                opacity:1;
+            }
+        }
+
+        @keyframes fadePopup{
+
+            from{
+                opacity:0;
+            }
+
+            to{
+                opacity:1;
+            }
+        }
+
+        /* Responsive */
+
+        @media(max-width:500px){
+
+            .container{
+                width:100%;
+                padding:25px;
+            }
+
+            h1{
+                font-size:24px;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Background Particles -->
+
+    <div class="particles">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Loading Screen -->
+
+    <div class="loader-wrapper" id="loader">
+        <div class="loader"></div>
+
+        <div class="loading-text">
+            AI is analyzing network traffic...
+        </div>
+    </div>
+
+    <!-- Main Container -->
+
+    <div class="container">
+
+        <div class="logo">
+            🛡️
+        </div>
+
+        <h1>AI Intrusion Detection</h1>
+
+        <div class="subtitle">
+            Intelligent Network Threat Analysis System
+        </div>
+
+        <form id="predictionForm" method="POST" action="/predict">
+
+            <div class="input-group">
+                <label>Flow Duration</label>
+
+                <input
+                    type="number"
+                    step="any"
+                    name="flow_duration"
+                    placeholder="Enter network flow duration"
+                    required>
+            </div>
+
+            <div class="input-group">
+                <label>Forward Packets</label>
+
+                <input
+                    type="number"
+                    step="any"
+                    name="total_fwd_packets"
+                    placeholder="Enter total forward packets"
+                    required>
+            </div>
+
+            <div class="input-group">
+                <label>Backward Packets</label>
+
+                <input
+                    type="number"
+                    step="any"
+                    name="total_backward_packets"
+                    placeholder="Enter backward packets count"
+                    required>
+            </div>
+
+            <div class="input-group">
+                <label>Forward Packet Length</label>
+
+                <input
+                    type="number"
+                    step="any"
+                    name="total_length_fwd_packets"
+                    placeholder="Enter forward packet length"
+                    required>
+            </div>
+
+            <button class="btn" type="submit">
+                Detect Threat
+            </button>
+
+        </form>
+
+    </div>
+
+    {% if prediction %}
+
+    <div class="popup-overlay" id="popup">
+
+        <div class="popup-box">
+
+            <h2>Prediction Result</h2>
+
+            <p>{{ prediction }}</p>
+
+            <button onclick="closePopup()">
+                Close
+            </button>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+    <!-- JavaScript -->
+
+    <script>
+
+        const form = document.getElementById('predictionForm');
+        const loader = document.getElementById('loader');
+
+        form.addEventListener('submit', function(e){
+
+            e.preventDefault();
+
+            loader.style.display = 'flex';
+
+            setTimeout(() => {
+
+                form.submit();
+
+            }, 2500);
+
+        });
+
+        function closePopup(){
+
+            document.getElementById("popup").style.display = "none";
+        }
+
+    </script>
+
+</body>
+</html>
+
