@@ -51,18 +51,22 @@ Follow these steps sequentially to configure your local execution workspace:
 
 ### 1. Initialize Your Environment Setup
 Navigate to your project root folder inside your terminal and activate your localized virtual workspace environment:
-
-```bash
-# Initialize isolated directory dependencies
+* **Initialize isolated directory dependencies**
+```
 python -m venv venv
-
-# Activate workspace (Windows Command Prompt)
+```
+* **Activate workspace (Windows Command Prompt)**
+```
 venv\Scripts\activate
+```
 
-# Activate workspace (Mac / Linux Terminal)
+* **Activate workspace (Mac / Linux Terminal)**
+```
 source venv/bin/activate
+```
 
-# Fetch package dependencies from your checklist manifest
+* **Fetch package dependencies from your checklist manifest**
+```
 pip install -r requirment.txt
 ```
 ### 2. Launch the Production Microservice ASGI Server Gateway
@@ -70,13 +74,13 @@ Deploy the asynchronous service engine using uvicorn to bind the core processing
 ```bash
 uvicorn app:app --reload
 ```
-# Once initiated successfully, open up your browser window to http://127.0.0.1:8000 to interact with your live local implementation dashboard.
+Once initiated successfully, open up your browser window to http://127.0.0.1:8000 to interact with your live local implementation dashboard.
 
 ### 📊 Evaluation & Verification Parameters
 The system functionality satisfies standard operational engineering principles as outlined in your program guidelines:
 
-# Algorithmic Efficiency: Uses multi-threaded parsing structures to maintain data processing speeds cleanly across large network telemetry frames.
+* **Algorithmic Efficiency:** Uses multi-threaded parsing structures to maintain data processing speeds cleanly across large network telemetry frames.
 
-# Traceability Metric Mapping: Generates clean logs that store application runtime values automatically, supporting end-to-end performance verification.
+* **Traceability Metric Mapping:** Generates clean logs that store application runtime values automatically, supporting end-to-end performance verification.
 
-# Exception Handling Boundaries: Integrates fallback routines inside data pipeline structures to capture value anomalies before they trigger systemic memory collection leaks.
+* **Exception Handling Boundaries:** Integrates fallback routines inside data pipeline structures to capture value anomalies before they trigger systemic memory collection leaks.
