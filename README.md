@@ -1,6 +1,7 @@
 # AI-Enhanced Network Intrusion Detection System (NIDS)
 
-[cite_start]An advanced network security framework that shifts enterprise system defenses from rigid signature-matching rules to an adaptive, anomaly-based machine learning architecture[cite: 3, 4, 383, 384]. [cite_start]This application ingests web traffic telemetry, parses core data vectors, and uses optimized multi-class machine learning classifiers to flag, categorize, and log malicious exploits in real time[cite: 3, 380, 383, 505, 506].
+An advanced network security framework that shifts enterprise system defenses from rigid signature-matching rules to an adaptive, anomaly-based machine learning architecture. 
+This application ingests web traffic telemetry, parses core data vectors, and uses optimized multi-class machine learning classifiers to flag, categorize, and log malicious exploits in real time.
 
 ---
 
